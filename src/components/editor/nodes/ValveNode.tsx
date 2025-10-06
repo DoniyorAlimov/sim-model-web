@@ -1,19 +1,60 @@
-import { Handle, Position, type Node, type NodeProps } from '@xyflow/react';
-import ValveIcon from '../icons/ValveIcon';
-import NodeContainer from './NodeContainer';
+import { Handle, Position, type Node, type NodeProps } from "@xyflow/react";
+import ValveIcon from "../icons/ValveIcon";
+import NodeContainer from "./NodeContainer";
+import useModelStore, { type Valve } from "../../../store/modelStore";
+import { useEffect, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-export type ValveType = 'valveNode';
-export const valveType: ValveType = 'valveNode';
+export type ValveType = "valveNode";
+export const valveType: ValveType = "valveNode";
 
 export type ValveProps = {
   tagname: string;
-  pv: number | null;
   op: number | null;
 };
 
 export type ValveNode = Node<ValveProps, ValveType>;
 
-const ValveNode = ({ data: { tagname, pv, op } }: NodeProps<ValveNode>) => {
+const ValveNode = ({ data: { tagname } }: NodeProps<ValveNode>) => {
+  const [PV, setPV] = useState(0);
+  const [OP, setOP] = useState(0);
+  const modelData = useModelStore((s) => s.modelData);
+
+  const sendOP = useMutation({
+    mutationFn: (value: number) =>
+      axios.post("http://localhost:8000/model/" + tagname, {
+        attribute: "set_op",
+        value,
+      }),
+    onSuccess: () => toast.success("Successfully set OP"),
+  });
+
+  useEffect(() => {
+    if (modelData) {
+      const data = modelData[tagname] as Valve;
+      setPV(data.pv * 100);
+      setOP(data.op * 100);
+    }
+  }, [modelData]);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+    if (/^\d*$/.test(value)) {
+      setOP(Number(value));
+    }
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      const value = e.currentTarget.value;
+      if (Number.isNaN(value)) return;
+      sendOP.mutate(Number(value));
+    }
+  };
+
   return (
     <NodeContainer nodeId={tagname} className="text-center">
       <div className="text-blue-500 mb-2">{tagname}</div>
@@ -23,7 +64,7 @@ const ValveNode = ({ data: { tagname, pv, op } }: NodeProps<ValveNode>) => {
         <input
           id="pv"
           disabled
-          value={pv!}
+          value={PV!.toFixed(0)}
           className="w-full text-right text-blue-500"
         />
       </div>
@@ -31,14 +72,17 @@ const ValveNode = ({ data: { tagname, pv, op } }: NodeProps<ValveNode>) => {
         <label htmlFor="op">OP: </label>
         <input
           id="op"
-          defaultValue={op!}
+          value={OP}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
           min={0}
           max={100}
+          inputMode="numeric"
           className="w-full text-right focus:border rounded-sm"
         />
       </div>
-      <Handle type="target" position={Position.Left} style={{ top: '55%' }} />
-      <Handle type="source" position={Position.Right} style={{ top: '55%' }} />
+      <Handle type="target" position={Position.Left} style={{ top: "55%" }} />
+      <Handle type="source" position={Position.Right} style={{ top: "55%" }} />
     </NodeContainer>
   );
 };
