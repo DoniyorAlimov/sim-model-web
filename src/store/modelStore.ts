@@ -39,14 +39,20 @@ type ModelItem = Valve | Pump | Vessel;
 
 export type ModelData = Record<string, ModelItem>;
 
+export type SimulationData = Record<string, number | null>;
+
 type ModelStore = {
   modelData: ModelData | null;
+  simData: SimulationData | null;
   setModelData: (modelData: ModelData) => void;
+  setSimData: (simData: SimulationData) => void;
 };
 
 const useModelStore = create<ModelStore>((set) => ({
   modelData: null,
+  simData: null,
   setModelData: (modelData) => set({ modelData }),
+  setSimData: (simData) => set({ simData }),
 }));
 
 if (import.meta.env.MODE === "development")
