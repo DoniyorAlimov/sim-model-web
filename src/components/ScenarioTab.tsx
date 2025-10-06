@@ -37,6 +37,40 @@ const ScenarioTab = () => {
     onSuccess: () => toast.info("Fire button pressed"),
   });
 
+  const onReportClick = () => {
+    const source = new EventSource("http://localhost:8000/score");
+
+    const id = toast.loading("Generating report...");
+
+    let fullText = "";
+
+    source.onmessage = (e) => {
+      if (e.data === "[DONE]") {
+        source.close();
+        return;
+      }
+      fullText += e.data;
+
+      toast.update(id, {
+        render: fullText,
+        type: "success",
+        isLoading: false,
+        autoClose: false,
+        closeButton: true,
+        position: "top-right",
+      });
+    };
+
+    source.onerror = (err) => {
+      toast.update(id, {
+        render: "Stream error: " + err,
+        type: "error",
+        isLoading: false,
+      });
+      source.close();
+    };
+  };
+
   return (
     <div className="text-3xl flex gap-3 items-center">
       <div>Scenarios</div>
@@ -62,7 +96,10 @@ const ScenarioTab = () => {
         <PiFireExtinguisherFill className="text-red-500" />
         <div>Push</div>
       </div>
-      <div className="flex gap-1 items-center text-xl border rounded-sm self-stretch px-1 cursor-pointer hover:bg-gray-700">
+      <div
+        onClick={() => onReportClick()}
+        className="flex gap-1 items-center text-xl border rounded-sm self-stretch px-1 cursor-pointer hover:bg-gray-700"
+      >
         <HiOutlineDocumentReport />
         <div>Report</div>
       </div>
