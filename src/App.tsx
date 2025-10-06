@@ -1,4 +1,4 @@
-import Flow from "./components/flow_chart/Flow";
+import Flow from "./components/editor/Flow";
 import NavBar from "./components/NavBar";
 
 const App = () => {

@@ -1,20 +1,14 @@
 import { type Edge, type Node } from "@xyflow/react";
-import {
-  flowType,
-  type FlowProps,
-} from "../components/flow_chart/nodes/FlowNode";
+import { flowType, type FlowProps } from "../components/editor/nodes/FlowNode";
 import {
   valveType,
   type ValveProps,
-} from "../components/flow_chart/nodes/ValveNode";
+} from "../components/editor/nodes/ValveNode";
 import {
   vesselType,
   type VesselProps,
-} from "../components/flow_chart/nodes/VesselNode";
-import {
-  pumpType,
-  type PumpProps,
-} from "../components/flow_chart/nodes/PumpNode";
+} from "../components/editor/nodes/VesselNode";
+import { pumpType, type PumpProps } from "../components/editor/nodes/PumpNode";
 
 export const initialNodes: Node[] = [
   {

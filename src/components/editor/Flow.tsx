@@ -4,6 +4,8 @@ import FlowNode from "./nodes/FlowNode";
 import ValveNode from "./nodes/ValveNode";
 import PumpNode from "./nodes/PumpNode";
 import VesselNode from "./nodes/VesselNode";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const nodeTypes: NodeTypes = {
   flowNode: FlowNode,
@@ -14,6 +16,15 @@ const nodeTypes: NodeTypes = {
 
 const Flow = () => {
   const { nodes, edges, onConnect } = useEditorStore();
+
+  const { data: modelData } = useQuery({
+    queryKey: ["models"],
+    queryFn: () =>
+      axios.get("http://localhost:8000/model/").then((res) => res.data),
+    refetchInterval: 1000,
+  });
+
+  console.log(modelData);
 
   return (
     <ReactFlow
