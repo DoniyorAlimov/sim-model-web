@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 type Props = {
   color?: string;
@@ -12,7 +12,7 @@ const VesselIcon = ({
   color,
   width,
   height,
-  indicatorColor = 'green',
+  indicatorColor = "green",
   level = 0,
 }: Props) => {
   const [fillHeight, setFillHeight] = useState(0);
@@ -21,7 +21,7 @@ const VesselIcon = ({
   const rectHeight = 24 * 3.7795;
 
   useEffect(() => {
-    setFillHeight((rectHeight * level) / 100);
+    setFillHeight((rectHeight * Math.min(100, level)) / 100);
   }, [level]);
 
   // scaled height based on level

@@ -24,9 +24,9 @@ export const initialNodes: Node[] = [
     position: { x: 250, y: -17 },
   },
   {
-    id: "Vessel1",
+    id: "vessel1",
     type: vesselType,
-    data: { tagname: "Vessel1" } as VesselProps,
+    data: { tagname: "vessel1" } as VesselProps,
     position: { x: 500, y: -118 },
   },
   {
@@ -135,10 +135,10 @@ export const initialNodes: Node[] = [
 
 export const initialEdges: Edge[] = [
   { id: "Inlet-v4", source: "Inlet", target: "v4", type: "step" },
-  { id: "v4-Vessel1", source: "v4", target: "Vessel1", type: "step" },
-  { id: "Vessel1-v8", source: "Vessel1", target: "v8", type: "step" },
+  { id: "v4-vessel1", source: "v4", target: "vessel1", type: "step" },
+  { id: "vessel1-v8", source: "vessel1", target: "v8", type: "step" },
   { id: "v8-Vent", source: "v8", target: "Vent", type: "step" },
-  { id: "Vessel1-v0", source: "Vessel1", target: "v0", type: "step" },
+  { id: "vessel1-v0", source: "vessel1", target: "v0", type: "step" },
   { id: "v0-In_vlv_out", source: "v0", target: "In_vlv_out", type: "step" },
   { id: "In_vlv_out-v1", source: "In_vlv_out", target: "v1", type: "step" },
   { id: "v1-Mid2_in", source: "v1", target: "Mid2_in", type: "step" },
