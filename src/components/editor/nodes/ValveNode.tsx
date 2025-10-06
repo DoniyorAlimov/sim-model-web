@@ -27,7 +27,7 @@ const ValveNode = ({ data: { tagname } }: NodeProps<ValveNode>) => {
         attribute: "set_op",
         value,
       }),
-    onSuccess: () => toast.success("Successfully set OP"),
+    onSuccess: () => toast.success("OP changed!"),
   });
 
   useEffect(() => {
