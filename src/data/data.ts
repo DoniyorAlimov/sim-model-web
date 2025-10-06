@@ -12,9 +12,9 @@ import { pumpType, type PumpProps } from "../components/editor/nodes/PumpNode";
 
 export const initialNodes: Node[] = [
   {
-    id: "Inlet",
+    id: "Source",
     type: flowType,
-    data: { tagname: "Inlet", value: 0 } as FlowProps,
+    data: { tagname: "Source", value: 0 } as FlowProps,
     position: { x: 0, y: 0 },
   },
   {
@@ -36,9 +36,9 @@ export const initialNodes: Node[] = [
     position: { x: 750, y: -200 },
   },
   {
-    id: "Vent",
+    id: "Gas1_out",
     type: flowType,
-    data: { tagname: "Vent", value: 0 } as FlowProps,
+    data: { tagname: "Gas1_out", value: 0 } as FlowProps,
     position: { x: 900, y: -183 },
   },
   {
@@ -134,10 +134,10 @@ export const initialNodes: Node[] = [
 ];
 
 export const initialEdges: Edge[] = [
-  { id: "Inlet-v4", source: "Inlet", target: "v4", type: "step" },
+  { id: "Source-v4", source: "Source", target: "v4", type: "step" },
   { id: "v4-vessel1", source: "v4", target: "vessel1", type: "step" },
   { id: "vessel1-v8", source: "vessel1", target: "v8", type: "step" },
-  { id: "v8-Vent", source: "v8", target: "Vent", type: "step" },
+  { id: "v8-Gas1_out", source: "v8", target: "Gas1_out", type: "step" },
   { id: "vessel1-v0", source: "vessel1", target: "v0", type: "step" },
   { id: "v0-In_vlv_out", source: "v0", target: "In_vlv_out", type: "step" },
   { id: "In_vlv_out-v1", source: "In_vlv_out", target: "v1", type: "step" },
