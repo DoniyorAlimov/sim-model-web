@@ -22,7 +22,7 @@ const SimulateTab = () => {
   });
 
   return (
-    <div className=" text-3xl flex gap-2 items-center">
+    <div className="w-28 text-3xl flex gap-2 items-center">
       {isRunning ? (
         <CiPause1
           onClick={() => stopSimulation.mutate()}
