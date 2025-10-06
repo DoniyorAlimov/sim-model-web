@@ -1,7 +1,11 @@
-import React from "react";
+import NavBar from "./components/NavBar";
 
 const App = () => {
-  return <div className="font-bold text-3xl">Sim model web</div>;
+  return (
+    <div className="h-full">
+      <NavBar />
+    </div>
+  );
 };
 
 export default App;
