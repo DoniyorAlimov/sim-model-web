@@ -19,6 +19,7 @@ export type ValveNode = Node<ValveProps, ValveType>;
 const ValveNode = ({ data: { tagname } }: NodeProps<ValveNode>) => {
   const [PV, setPV] = useState(0);
   const [OP, setOP] = useState(0);
+  const [isEditing, setIsEditing] = useState(false);
   const modelData = useModelStore((s) => s.modelData);
 
   const sendOP = useMutation({
@@ -34,7 +35,8 @@ const ValveNode = ({ data: { tagname } }: NodeProps<ValveNode>) => {
     if (modelData) {
       const data = modelData[tagname] as Valve;
       setPV(data.pv * 100);
-      setOP(data.op * 100);
+
+      if (!isEditing) setOP(data.op * 100);
     }
   }, [modelData]);
 
@@ -44,6 +46,9 @@ const ValveNode = ({ data: { tagname } }: NodeProps<ValveNode>) => {
       setOP(Number(value));
     }
   };
+
+  const onFocus = () => setIsEditing(true);
+  const onBlur = () => setIsEditing(false);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -74,6 +79,8 @@ const ValveNode = ({ data: { tagname } }: NodeProps<ValveNode>) => {
           value={OP}
           onChange={onChange}
           onKeyDown={onKeyDown}
+          onFocus={onFocus}
+          onBlur={onBlur}
           min={0}
           max={100}
           inputMode="numeric"
