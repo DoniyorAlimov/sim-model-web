@@ -12,7 +12,6 @@ export const valveType: ValveType = "valveNode";
 
 export type ValveProps = {
   tagname: string;
-  op: number | null;
 };
 
 export type ValveNode = Node<ValveProps, ValveType>;
