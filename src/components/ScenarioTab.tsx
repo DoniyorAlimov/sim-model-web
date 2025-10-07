@@ -40,7 +40,9 @@ const ScenarioTab = () => {
   const onReportClick = () => {
     const source = new EventSource("http://localhost:8000/score");
 
-    const id = toast.loading("Generating report...");
+    const id = toast.loading("Generating report...", {
+      position: "bottom-right",
+    });
 
     let fullText = "";
 
@@ -57,7 +59,7 @@ const ScenarioTab = () => {
         isLoading: false,
         autoClose: false,
         closeButton: true,
-        position: "top-right",
+        position: "bottom-right",
       });
     };
 
@@ -66,6 +68,7 @@ const ScenarioTab = () => {
         render: "Stream error: " + err,
         type: "error",
         isLoading: false,
+        autoClose: 3000,
       });
       source.close();
     };
